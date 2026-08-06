@@ -13,10 +13,21 @@ final:[]
 
 
 
+if(localStorage.getItem("league")){
+
+league=
+JSON.parse(
+localStorage.getItem("league")
+);
+
+}
+
+
+
 function save(){
 
 localStorage.setItem(
-"uclLeague",
+"league",
 JSON.stringify(league)
 );
 
@@ -24,23 +35,10 @@ JSON.stringify(league)
 
 
 
-if(localStorage.getItem("uclLeague")){
-
-league=
-JSON.parse(
-localStorage.getItem("uclLeague")
-);
-
-}
+function loadTeams(){
 
 
-
-function loadLeague(){
-
-
-let box=
-document.getElementById("teams");
-
+let box=document.getElementById("teams");
 
 box.innerHTML="";
 
@@ -50,23 +48,20 @@ league.forEach((team,index)=>{
 
 let div=document.createElement("div");
 
-
 div.className="team";
 
 div.draggable=true;
 
 
 div.innerHTML=
-`
-${index+1}. ${team}
-`;
+`${index+1}. ${team}`;
 
 
 
 div.ondragstart=e=>{
 
 e.dataTransfer.setData(
-"index",
+"from",
 index
 );
 
@@ -87,8 +82,9 @@ div.ondrop=e=>{
 
 let from=
 Number(
-e.dataTransfer.getData("index")
+e.dataTransfer.getData("from")
 );
+
 
 
 let moved=
@@ -105,7 +101,7 @@ moved
 
 save();
 
-loadLeague();
+loadTeams();
 
 
 };
@@ -122,6 +118,8 @@ box.appendChild(div);
 
 
 
+
+
 function createMatch(a,b,stage,id){
 
 
@@ -129,8 +127,11 @@ return `
 
 <div class="match">
 
+
 <button onclick="pick('${a}','${stage}',${id})">
+
 ${a}
+
 </button>
 
 
@@ -138,7 +139,9 @@ ${a}
 
 
 <button onclick="pick('${b}','${stage}',${id})">
+
 ${b}
+
 </button>
 
 
@@ -147,6 +150,8 @@ ${b}
 `;
 
 }
+
+
 
 
 
@@ -164,23 +169,21 @@ render();
 
 
 
-function createKnockout(){
+
+function generateKnockout(){
 
 
-let box=
-document.getElementById("bracket");
-
+let box=document.getElementById("bracket");
 
 box.innerHTML="";
 
 
-let playoff=
+let playoffs=
 league.slice(8,24);
 
 
 
-box.innerHTML+=
-"<h2>Playoff Round</h2>";
+box.innerHTML+="<h2>Playoffs</h2>";
 
 
 
@@ -189,8 +192,8 @@ for(let i=0;i<16;i+=2){
 
 box.innerHTML+=
 createMatch(
-playoff[i],
-playoff[i+1],
+playoffs[i],
+playoffs[i+1],
 "playoffs",
 i/2
 );
@@ -204,11 +207,11 @@ i/2
 
 
 
+
 function render(){
 
 
-let box=
-document.getElementById("bracket");
+let box=document.getElementById("bracket");
 
 
 let html="";
@@ -226,9 +229,12 @@ if(p.length===8){
 html+="<h2>Round of 16</h2>";
 
 
+
 let r16=[
+
 ...league.slice(0,8),
 ...p
+
 ];
 
 
@@ -252,6 +258,8 @@ i/2
 
 
 
+
+
 let r=
 knockout.r16.filter(Boolean);
 
@@ -261,6 +269,7 @@ if(r.length===8){
 
 
 html+="<h2>Quarterfinals</h2>";
+
 
 
 for(let i=0;i<8;i+=2){
@@ -282,6 +291,8 @@ i/2
 
 
 
+
+
 let q=
 knockout.qf.filter(Boolean);
 
@@ -291,6 +302,7 @@ if(q.length===4){
 
 
 html+="<h2>Semifinals</h2>";
+
 
 
 for(let i=0;i<4;i+=2){
@@ -312,6 +324,8 @@ i/2
 
 
 
+
+
 let s=
 knockout.sf.filter(Boolean);
 
@@ -321,6 +335,7 @@ if(s.length===2){
 
 
 html+="<h2>FINAL</h2>";
+
 
 
 html+=
@@ -336,6 +351,8 @@ s[1],
 
 
 
+
+
 if(knockout.final[0]){
 
 
@@ -343,7 +360,7 @@ html+=`
 
 <div class="champion">
 
-🏆 CHAMPION 🏆
+🏆 CHAMPIONS LEAGUE WINNER 🏆
 
 <h1>
 ${knockout.final[0]}
@@ -365,7 +382,8 @@ box.innerHTML=html;
 
 
 
-function reset(){
+
+function resetAll(){
 
 
 localStorage.clear();
@@ -375,15 +393,18 @@ league=[...teams];
 
 
 knockout={
+
 playoffs:[],
 r16:[],
 qf:[],
 sf:[],
 final:[]
+
 };
 
 
-loadLeague();
+
+loadTeams();
 
 
 document.getElementById("bracket").innerHTML="";
@@ -393,4 +414,5 @@ document.getElementById("bracket").innerHTML="";
 
 
 
-loadLeague();
+
+loadTeams();
