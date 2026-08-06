@@ -8,12 +8,16 @@ let rounds = {
     final: []
 };
 
+let draggedIndex = null;
+
 
 const leagueTable = document.getElementById("leagueTable");
 const knockout = document.getElementById("knockout");
 
 
-function saveData() {
+
+function saveData(){
+
     localStorage.setItem(
         "uclLeague",
         JSON.stringify(leagueTeams)
@@ -23,57 +27,78 @@ function saveData() {
         "uclRounds",
         JSON.stringify(rounds)
     );
+
 }
 
 
-function loadData() {
 
-    const savedTeams =
+function loadData(){
+
+    let savedTeams =
         localStorage.getItem("uclLeague");
 
-    const savedRounds =
+    let savedRounds =
         localStorage.getItem("uclRounds");
 
 
     if(savedTeams){
-        leagueTeams = JSON.parse(savedTeams);
+
+        leagueTeams =
+        JSON.parse(savedTeams);
+
     }
 
 
     if(savedRounds){
-        rounds = JSON.parse(savedRounds);
+
+        rounds =
+        JSON.parse(savedRounds);
+
     }
 
 }
+
 
 
 
 function renderLeague(){
 
-    leagueTable.innerHTML = "";
+
+    leagueTable.innerHTML="";
 
 
     leagueTeams.forEach((team,index)=>{
 
+
         let div=document.createElement("div");
 
+
         div.className="team";
+
 
         div.draggable=true;
 
 
-        div.innerHTML =
+        div.innerHTML=
+
         `
-        <span class="position">${index+1}</span>
+        <span class="position">
+        ${index+1}
+        </span>
+
         ${team}
         `;
+
 
 
         div.addEventListener(
             "dragstart",
             ()=>{
+
+                draggedIndex=index;
+
                 div.classList.add("dragging");
-                dragged=index;
+
             }
         );
 
@@ -81,7 +106,9 @@ function renderLeague(){
         div.addEventListener(
             "dragend",
             ()=>{
+
                 div.classList.remove("dragging");
+
             }
         );
 
@@ -89,7 +116,9 @@ function renderLeague(){
         div.addEventListener(
             "dragover",
             e=>{
+
                 e.preventDefault();
+
             }
         );
 
@@ -98,18 +127,32 @@ function renderLeague(){
             "drop",
             ()=>{
 
-                let temp=leagueTeams[dragged];
 
-                leagueTeams.splice(dragged,1);
+                let moved =
+                leagueTeams[draggedIndex];
 
-                leagueTeams.splice(index,0,temp);
+
+                leagueTeams.splice(
+                    draggedIndex,
+                    1
+                );
+
+
+                leagueTeams.splice(
+                    index,
+                    0,
+                    moved
+                );
+
 
                 saveData();
 
                 renderLeague();
 
+
             }
         );
+
 
 
         leagueTable.appendChild(div);
@@ -117,59 +160,9 @@ function renderLeague(){
 
     });
 
-}
-
-
-
-let dragged;
-
-
-
-function createMatch(team1,team2,round,index){
-
-
-return `
-
-<div class="match">
-
-
-<button onclick="chooseWinner('${team1}','${round}',${index})">
-${team1}
-</button>
-
-
-<div class="vs">
-VS
-</div>
-
-
-<button onclick="chooseWinner('${team2}','${round}',${index})">
-${team2}
-</button>
-
-
-</div>
-
-`;
 
 }
 
-
-
-function chooseWinner(team,round,index){
-
-
-    rounds[round][index]=team;
-
-
-    advanceRound(round);
-
-
-    saveData();
-
-    renderKnockout();
-
-}
 
 
 
@@ -177,135 +170,180 @@ function chooseWinner(team,round,index){
 function generateKnockout(){
 
 
-rounds.playoffs=[];
+    rounds.playoffs=[];
 
 
-let teams =
-leagueTeams.slice(8,24);
-
-
-
-for(let i=0;i<teams.length;i+=2){
-
-    rounds.playoffs.push({
-        teams:[
-            teams[i],
-            teams[i+1]
-        ],
-        winner:null
-    });
-
-}
-
-
-saveData();
-
-renderKnockout();
-
-
-}
+    let playoffTeams =
+    leagueTeams.slice(8,24);
 
 
 
+    for(let i=0;i<16;i+=2){
 
 
-function advanceRound(round){
+        rounds.playoffs.push({
+
+            teams:[
+                playoffTeams[i],
+                playoffTeams[i+1]
+            ],
+
+            winner:null
+
+        });
 
 
-if(round==="playoffs"){
-
-let winners =
-rounds.playoffs.filter(
-m=>m.winner
-);
-
-if(winners.length===8){
-
-rounds.r16=[];
-
-let teams=[
-...leagueTeams.slice(0,8),
-...winners.map(x=>x.winner)
-];
+    }
 
 
-for(let i=0;i<16;i+=2){
 
-rounds.r16.push({
-teams:[
-teams[i],
-teams[i+1]
-],
-winner:null
-});
+    saveData();
 
-}
-
-}
+    renderKnockout();
 
 
 }
 
 
 
-if(round==="r16"){
 
-createNextRound(
-"r16",
-"qf"
-);
+
+
+function createMatch(match,round,index){
+
+
+    if(match.winner){
+
+
+        return `
+
+        <div class="match">
+
+        <div class="winner">
+
+        ${match.winner}
+
+        </div>
+
+        </div>
+
+        `;
+
+    }
+
+
+
+    return `
+
+    <div class="match">
+
+
+    <button onclick="chooseWinner('${match.teams[0]}','${round}',${index})">
+
+    ${match.teams[0]}
+
+    </button>
+
+
+    <div class="vs">
+
+    VS
+
+    </div>
+
+
+    <button onclick="chooseWinner('${match.teams[1]}','${round}',${index})">
+
+    ${match.teams[1]}
+
+    </button>
+
+
+    </div>
+
+    `;
+
 
 }
 
 
 
-if(round==="qf"){
-
-createNextRound(
-"qf",
-"sf"
-);
-
-}
 
 
 
-if(round==="sf"){
+function chooseWinner(team,round,index){
 
-createNextRound(
-"sf",
-"final"
-);
 
-}
+    rounds[round][index].winner = team;
+
+
+    createNextRound(round);
+
+
+    saveData();
+
+
+    renderKnockout();
 
 
 }
 
 
 
-function createNextRound(from,to){
 
 
-let winners =
-rounds[from]
-.filter(m=>m.winner)
-.map(m=>m.winner);
 
 
-let needed =
-to==="final"?2:4;
+function createNextRound(round){
 
 
-if(winners.length===needed){
+
+let next;
 
 
-rounds[to]=[];
+if(round==="playoffs") next="r16";
+
+if(round==="r16") next="qf";
+
+if(round==="qf") next="sf";
+
+if(round==="sf") next="final";
+
+
+
+if(!next)
+return;
+
+
+
+let winners = rounds[round]
+.filter(match=>match.winner)
+.map(match=>match.winner);
+
+
+
+let required =
+round==="playoffs" ? 8 :
+round==="r16" ? 4 :
+round==="qf" ? 2 :
+round==="sf" ? 1 :
+0;
+
+
+
+if(winners.length!==required)
+return;
+
+
+
+rounds[next]=[];
+
 
 
 for(let i=0;i<winners.length;i+=2){
 
-rounds[to].push({
+
+rounds[next].push({
 
 teams:[
 winners[i],
@@ -316,14 +354,13 @@ winner:null
 
 });
 
-}
-
 
 }
 
 
 
 }
+
 
 
 
@@ -342,12 +379,15 @@ if(rounds[round].length===0)
 return;
 
 
+
 let section=document.createElement("div");
+
 
 section.className="round";
 
 
 section.innerHTML=
+
 `<h3>${round.toUpperCase()}</h3>`;
 
 
@@ -355,52 +395,51 @@ section.innerHTML=
 rounds[round].forEach((match,index)=>{
 
 
-if(match.winner){
-
 section.innerHTML +=
+
+createMatch(
+match,
+round,
+index
+);
+
+
+});
+
+
+
+knockout.appendChild(section);
+
+
+
+});
+
+
+
+
+
+let champion =
+rounds.final[0]?.winner;
+
+
+if(champion){
+
+
+knockout.innerHTML +=
 
 `
 
-<div class="match">
+<div class="champion">
 
-<div class="winner">
+🏆 CHAMPION 🏆
 
-Winner:
-<br>
-
-${match.winner}
-
-</div>
+<h1>${champion}</h1>
 
 </div>
 
 `;
 
 }
-
-else{
-
-
-section.innerHTML +=
-
-createMatch(
-match.teams[0],
-match.teams[1],
-round,
-index
-);
-
-
-}
-
-
-});
-
-
-knockout.appendChild(section);
-
-
-});
 
 
 }
@@ -419,14 +458,21 @@ location.reload();
 
 
 
+
+
 document
 .getElementById("generateBtn")
-.onclick=generateKnockout;
+.onclick =
+generateKnockout;
+
 
 
 document
 .getElementById("resetBtn")
-.onclick=resetAll;
+.onclick =
+resetAll;
+
+
 
 
 
