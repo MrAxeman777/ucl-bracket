@@ -1,90 +1,187 @@
-body{
+* {
+    box-sizing: border-box;
+}
 
-background:#061633;
-color:white;
-font-family:Arial;
-text-align:center;
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #06152f, #0b2a5b);
+    color: white;
+}
 
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 18px;
 }
 
 
-h1{
-
-font-size:40px;
-
+h2 {
+    text-align: center;
+    margin-top: 30px;
 }
 
 
-#teams{
+/* League Phase */
 
-width:400px;
-margin:auto;
-
+.league-table {
+    max-width: 600px;
+    margin: auto;
 }
 
 
-.team{
-
-background:#123265;
-padding:12px;
-margin:6px;
-border-radius:10px;
-cursor:pointer;
-
+.team {
+    background: #123c7a;
+    margin: 8px;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    transition: 0.2s;
 }
 
 
-
-button{
-
-background:#ffd700;
-border:0;
-padding:12px 20px;
-margin:15px;
-border-radius:8px;
-cursor:pointer;
-font-size:16px;
-
+.team:hover {
+    transform: scale(1.03);
 }
 
 
-
-#bracket{
-
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:15px;
-
+.team.dragging {
+    opacity: 0.5;
 }
 
 
-
-.match{
-
-background:#123265;
-padding:20px;
-border-radius:12px;
-width:220px;
-
-}
-
-
-
-.match button{
-
-background:#1765db;
-color:white;
-width:180px;
-
+.position {
+    width: 30px;
+    font-weight: bold;
 }
 
 
 
-.winner{
+/* Buttons */
 
-background:#00aa55;
-padding:15px;
-border-radius:10px;
+.buttons {
+    text-align: center;
+    margin: 30px;
+}
+
+
+button {
+    background: #ffd700;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 25px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+button:hover {
+    transform: scale(1.05);
+}
+
+
+
+/* Knockout */
+
+#knockout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+
+.round {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+
+.round h3 {
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+}
+
+
+
+.match {
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 15px;
+    width: 240px;
+    text-align: center;
+}
+
+
+.match button {
+    width: 90%;
+    background: #1457b8;
+    color: white;
+    margin: 5px;
+}
+
+
+.match button:hover {
+    background: #1d75ed;
+}
+
+
+.vs {
+    font-weight: bold;
+    margin: 5px;
+}
+
+
+.winner {
+    background: #1b9e45;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+
+.champion {
+    text-align: center;
+    background: gold;
+    color: black;
+    padding: 30px;
+    border-radius: 20px;
+    font-size: 30px;
+}
+
+
+
+/* Mobile */
+
+@media(max-width:700px){
+
+    header h1 {
+        font-size: 30px;
+    }
+
+
+    .match {
+        width: 90%;
+    }
 
 }
