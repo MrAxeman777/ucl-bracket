@@ -1,8 +1,11 @@
 let league = [...teams];
 
-
 const container = document.getElementById("teams");
 
+
+function loadTeams(){
+
+container.innerHTML="";
 
 league.forEach((team,index)=>{
 
@@ -10,84 +13,134 @@ let div=document.createElement("div");
 
 div.className="team";
 
-div.innerHTML =
+div.draggable=true;
+
+div.id=index;
+
+div.innerHTML=
 `${index+1}. ${team}`;
 
-div.onclick=()=>{
 
-let newPos =
-prompt(
-"Move "+team+
-" to position (1-36)"
+div.addEventListener(
+"dragstart",
+e=>{
+e.dataTransfer.setData(
+"text",
+index
 );
+});
 
-if(newPos){
 
-league.splice(index,1);
+div.addEventListener(
+"dragover",
+e=>{
+e.preventDefault();
+});
+
+
+div.addEventListener(
+"drop",
+e=>{
+
+let from =
+e.dataTransfer.getData("text");
+
+let to=index;
+
+
+let moved =
+league.splice(from,1)[0];
+
 
 league.splice(
-newPos-1,
+to,
 0,
-team
+moved
 );
 
-location.reload();
 
-}
+loadTeams();
 
-}
+});
+
 
 container.appendChild(div);
 
 });
 
+}
+
+
+loadTeams();
+
 
 
 function generateBracket(){
 
-let top8 = league.slice(0,8);
+let top8 =
+league.slice(0,8);
 
-let playoffs = league.slice(8,24);
+let playoffTeams =
+league.slice(8,24);
 
 
 let bracket =
 document.getElementById("bracket");
 
 
-bracket.innerHTML =
-"<h2>Playoffs</h2>";
+bracket.innerHTML="";
 
 
-for(let i=0;i<playoffs.length;i+=2){
+bracket.innerHTML+=
+"<h2>Knockout Playoffs</h2>";
 
-bracket.innerHTML +=
-`
+
+for(let i=0;i<16;i+=2){
+
+bracket.innerHTML+=`
+
 <div class="match">
-${playoffs[i]}
+
+${playoffTeams[i]}
+
 <br>
+
 VS
+
 <br>
-${playoffs[i+1]}
+
+${playoffTeams[i+1]}
+
 </div>
+
 `;
 
 }
 
 
-bracket.innerHTML +=
+
+bracket.innerHTML+=
 "<h2>Round of 16</h2>";
+
 
 top8.forEach(team=>{
 
-bracket.innerHTML +=
-`
+bracket.innerHTML+=`
+
 <div class="match">
+
 ${team}
+
 <br>
+
 VS
+
 <br>
-Winner Playoff
+
+Playoff Winner
+
 </div>
+
 `;
 
 });
