@@ -1,17 +1,14 @@
-body {
+body{
 
-background:#06142e;
-
+background:#041633;
 color:white;
-
-font-family:Arial, sans-serif;
-
+font-family:Arial;
 text-align:center;
 
 }
 
 
-h1 {
+h1{
 
 font-size:42px;
 
@@ -19,155 +16,98 @@ font-size:42px;
 
 
 
-#teams {
+#teams{
 
-
-width:80%;
-
+width:500px;
 margin:auto;
-
 display:flex;
-
 flex-direction:column;
-
-gap:10px;
-
+gap:8px;
 
 }
 
 
 
-.team {
+.team{
 
-
-background:#102957;
-
-padding:15px;
-
-border-radius:12px;
-
+background:#102b55;
+padding:14px;
+border-radius:10px;
 cursor:grab;
-
 font-size:18px;
 
+}
+
+
+.team:hover{
+
+background:#1c4c91;
 
 }
 
 
 
-.team:hover {
-
-
-background:#1d4385;
-
-
-}
-
-
-
-button {
-
+button{
 
 background:#ffd700;
-
 border:none;
-
-padding:15px 25px;
-
-margin:15px;
-
-font-size:18px;
-
+padding:14px 22px;
+margin:20px;
 border-radius:10px;
-
+font-size:18px;
 cursor:pointer;
 
-
 }
 
 
 
-button:hover {
-
-transform:scale(1.05);
-
-}
-
-
-
-#bracket {
-
+#bracket{
 
 display:flex;
-
 flex-wrap:wrap;
-
 justify-content:center;
-
-gap:20px;
+gap:15px;
 
 }
 
 
 
-.match {
+.match{
 
-
-background:#102957;
-
+background:#102b55;
 padding:20px;
-
 border-radius:15px;
-
 width:220px;
 
-
 }
 
 
 
-.match button {
+.match button{
 
-
-background:#1455d9;
-
+background:#1464d8;
 color:white;
-
 width:180px;
-
 margin:5px;
 
+}
+
+
+.match button:hover{
+
+background:#ffd700;
+color:black;
 
 }
 
 
 
-.match button:hover {
-
-
-background:#ffd700;
-
-color:black;
-
-
-}
-
-
-
-.champion {
-
+.champion{
 
 background:#ffd700;
-
 color:black;
-
 padding:30px;
-
 border-radius:20px;
-
 margin:30px;
-
-font-size:25px;
-
 
 }
