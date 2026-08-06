@@ -34,7 +34,6 @@ const teams = [
 "Sporting CP",
 
 "Club Brugge",
-
 "Slavia Prague",
 
 "Galatasaray",
