@@ -1,51 +1,52 @@
 const teams = [
+    "Arsenal",
+    "Manchester City",
+    "Manchester United",
+    "Aston Villa",
+    "Liverpool",
 
-"Arsenal",
-"Manchester City",
-"Manchester United",
-"Aston Villa",
-"Liverpool",
+    "Barcelona",
+    "Real Madrid",
+    "Villarreal",
+    "Atletico Madrid",
+    "Real Betis",
 
-"Barcelona",
-"Real Madrid",
-"Villarreal",
-"Atletico Madrid",
-"Real Betis",
+    "Inter Milan",
+    "Napoli",
+    "AS Roma",
+    "Como",
 
-"Inter Milan",
-"Napoli",
-"AS Roma",
-"Como",
+    "Bayern Munich",
+    "Borussia Dortmund",
+    "RB Leipzig",
+    "VfB Stuttgart",
 
-"Bayern Munich",
-"Borussia Dortmund",
-"RB Leipzig",
-"VfB Stuttgart",
+    "Paris Saint-Germain",
+    "RC Lens",
+    "LOSC Lille",
+    "Olympique Lyonnais",
 
-"Paris Saint-Germain",
-"RC Lens",
-"LOSC Lille",
-"Olympique Lyonnais",
+    "PSV Eindhoven",
+    "Feyenoord",
 
-"PSV Eindhoven",
-"Feyenoord",
+    "FC Porto",
+    "Sporting CP",
 
-"FC Porto",
-"Sporting CP",
+    "Club Brugge",
 
-"Club Brugge",
-"Slavia Prague",
+    "Slavia Prague",
 
-"Galatasaray",
-"Fenerbahçe",
+    "Galatasaray",
+    "Fenerbahce",
 
-"Shakhtar Donetsk",
-"GNK Dinamo Zagreb",
+    "Shakhtar Donetsk",
+    "GNK Dinamo Zagreb",
 
-"Olympiacos",
-"Red Star Belgrade",
+    "Olympiacos",
 
-"Celtic",
-"AGF Aarhus"
+    "Red Star Belgrade",
 
+    "Celtic",
+
+    "AGF Aarhus"
 ];
