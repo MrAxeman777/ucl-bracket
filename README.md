@@ -1,2 +1,2 @@
 # ucl-bracket
-UCL Predictor deployed 🚀
+UCL Predictor deployed 
