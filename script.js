@@ -1,43 +1,25 @@
-let league=[...teams];
+let league = [...teams];
 
-
-let playoffs=[];
-
-let r16=[];
-
-let qf=[];
-
-let sf=[];
-
-let final=[];
-
+let playoffs = [];
 
 
 function loadTeams(){
 
-let box=document.getElementById("teams");
+    const box = document.getElementById("teams");
 
-box.innerHTML="";
+    box.innerHTML = "";
 
+    league.forEach((team,index)=>{
 
-league.forEach((team,index)=>{
+        let div = document.createElement("div");
 
+        div.className = "team";
 
-let div=document.createElement("div");
+        div.innerHTML = `${index+1}. ${team}`;
 
-div.className="team";
+        box.appendChild(div);
 
-
-div.innerHTML=
-
-(index+1)+". "+team;
-
-
-box.appendChild(div);
-
-
-});
-
+    });
 
 }
 
@@ -45,158 +27,115 @@ box.appendChild(div);
 
 function generateKnockout(){
 
-
-playoffs=[];
-
-
-let teams16 =
-league.slice(8,24);
+    playoffs = [];
 
 
-
-for(let i=0;i<16;i+=2){
-
-
-playoffs.push({
-
-a:teams16[i],
-
-b:teams16[i+1],
-
-winner:null
-
-});
+    let playoffTeams = league.slice(8,24);
 
 
-}
+    for(let i = 0; i < playoffTeams.length; i += 2){
+
+        playoffs.push({
+
+            a: playoffTeams[i],
+
+            b: playoffTeams[i+1],
+
+            winner: null
+
+        });
+
+    }
 
 
-
-render();
-
+    renderBracket();
 
 }
 
 
 
+function pickWinner(team,index){
 
 
-function makeMatch(match,index,type){
+    playoffs[index].winner = team;
 
 
-
-if(match.winner){
-
-
-return `
-
-<div class="match">
-
-<div class="winner">
-
-Winner:
-<br>
-
-${match.winner}
-
-</div>
-
-</div>
-
-`;
-
+    renderBracket();
 
 }
 
 
 
-return `
+function renderBracket(){
 
-<div class="match">
-
-
-<button onclick="choose('${match.a}','${type}',${index})">
-
-${match.a}
-
-</button>
+    const box = document.getElementById("bracket");
 
 
-<h3>VS</h3>
+    let html = "<h2>Playoffs</h2>";
 
 
-<button onclick="choose('${match.b}','${type}',${index})">
-
-${match.b}
-
-</button>
+    playoffs.forEach((match,index)=>{
 
 
-</div>
+        if(match.winner){
 
-`;
+            html += `
 
+            <div class="match winner">
 
+            Winner:
+            ${match.winner}
 
-}
+            </div>
 
+            `;
 
+        }
 
-
-
-function choose(team,type,index){
-
-
-if(type==="playoffs"){
-
-playoffs[index].winner=team;
-
-}
+        else{
 
 
-render();
+            html += `
+
+            <div class="match">
 
 
-}
+            <button onclick="pickWinner('${match.a}',${index})">
+
+            ${match.a}
+
+            </button>
 
 
+            <h3>VS</h3>
 
 
+            <button onclick="pickWinner('${match.b}',${index})">
 
-function render(){
+            ${match.b}
 
-
-let box=document.getElementById("bracket");
-
-let html="";
+            </button>
 
 
-html+="<h2>Playoffs</h2>";
+            </div>
+
+            `;
+
+        }
 
 
-playoffs.forEach((m,i)=>{
-
-html+=makeMatch(
-m,
-i,
-"playoffs"
-);
-
-});
+    });
 
 
-
-box.innerHTML=html;
-
+    box.innerHTML = html;
 
 }
-
 
 
 
 function resetAll(){
 
-location.reload();
+    location.reload();
 
 }
 
