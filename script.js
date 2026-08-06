@@ -1,52 +1,205 @@
-let knockout = [];
+let league=[...teams];
+
+
+let playoffs=[];
+
+let r16=[];
+
+let qf=[];
+
+let sf=[];
+
+let final=[];
+
+
+
+function loadTeams(){
+
+let box=document.getElementById("teams");
+
+box.innerHTML="";
+
+
+league.forEach((team,index)=>{
+
+
+let div=document.createElement("div");
+
+div.className="team";
+
+
+div.innerHTML=
+
+(index+1)+". "+team;
+
+
+box.appendChild(div);
+
+
+});
+
+
+}
+
+
 
 function generateKnockout(){
 
-    knockout = [
-        ["Inter Milan","Borussia Dortmund"],
-        ["Aston Villa","Liverpool"],
-        ["Sporting CP","Villarreal"],
-        ["Napoli","AS Roma"]
-    ];
 
-    render();
+playoffs=[];
+
+
+let teams16 =
+league.slice(8,24);
+
+
+
+for(let i=0;i<16;i+=2){
+
+
+playoffs.push({
+
+a:teams16[i],
+
+b:teams16[i+1],
+
+winner:null
+
+});
+
 
 }
 
 
-function pickWinner(team){
 
-    alert("You picked: " + team);
+render();
+
 
 }
+
+
+
+
+
+function makeMatch(match,index,type){
+
+
+
+if(match.winner){
+
+
+return `
+
+<div class="match">
+
+<div class="winner">
+
+Winner:
+<br>
+
+${match.winner}
+
+</div>
+
+</div>
+
+`;
+
+
+}
+
+
+
+return `
+
+<div class="match">
+
+
+<button onclick="choose('${match.a}','${type}',${index})">
+
+${match.a}
+
+</button>
+
+
+<h3>VS</h3>
+
+
+<button onclick="choose('${match.b}','${type}',${index})">
+
+${match.b}
+
+</button>
+
+
+</div>
+
+`;
+
+
+
+}
+
+
+
+
+
+function choose(team,type,index){
+
+
+if(type==="playoffs"){
+
+playoffs[index].winner=team;
+
+}
+
+
+render();
+
+
+}
+
+
+
 
 
 function render(){
 
-    let box = document.getElementById("bracket");
 
-    box.innerHTML = "<h2>Playoffs</h2>";
+let box=document.getElementById("bracket");
 
-    knockout.forEach(match => {
+let html="";
 
-        box.innerHTML += `
 
-        <div class="match">
+html+="<h2>Playoffs</h2>";
 
-        <button onclick="pickWinner('${match[0]}')">
-        ${match[0]}
-        </button>
 
-        VS
+playoffs.forEach((m,i)=>{
 
-        <button onclick="pickWinner('${match[1]}')">
-        ${match[1]}
-        </button>
+html+=makeMatch(
+m,
+i,
+"playoffs"
+);
 
-        </div>
+});
 
-        `;
 
-    });
+
+box.innerHTML=html;
+
 
 }
+
+
+
+
+function resetAll(){
+
+location.reload();
+
+}
+
+
+
+loadTeams();
