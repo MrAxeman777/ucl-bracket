@@ -1,4 +1,5 @@
 const teams = [
+
 "Arsenal",
 "Manchester City",
 "Manchester United",
@@ -33,17 +34,22 @@ const teams = [
 "Sporting CP",
 
 "Club Brugge",
+
 "Slavia Prague",
 
 "Galatasaray",
 "Fenerbahçe",
 
 "Shakhtar Donetsk",
+
 "GNK Dinamo Zagreb",
 
 "Olympiacos",
+
 "Red Star Belgrade",
 
 "Celtic",
+
 "AGF Aarhus"
+
 ];
