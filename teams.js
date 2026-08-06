@@ -40,15 +40,12 @@ const teams = [
 "Fenerbahçe",
 
 "Shakhtar Donetsk",
-
 "GNK Dinamo Zagreb",
 
 "Olympiacos",
-
 "Red Star Belgrade",
 
 "Celtic",
-
 "AGF Aarhus"
 
 ];
