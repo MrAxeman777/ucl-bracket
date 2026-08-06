@@ -1,32 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>UCL Predictor</title>
+
+<title>UCL Predictor 2026/27</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
+<header>
+
 <h1>🏆 UEFA Champions League Predictor</h1>
+
+<p>
+Predict the new 36-team Champions League format
+</p>
+
+</header>
+
+
+
+<section>
 
 <h2>League Phase Prediction</h2>
 
-<p>Drag teams into your predicted final table.</p>
+<p>
+Drag teams into your predicted final table.
+</p>
+
 
 <div id="teams"></div>
 
-<button onclick="generateBracket()">
-Create Knockout Stage
+
+<button onclick="createKnockout()">
+Generate Knockout Stage
 </button>
 
 
-<h2>Knockout Stage</h2>
+<button onclick="reset()">
+Reset
+</button>
+
+
+</section>
+
+
+
+
+<section>
+
+<h2>Knockout Bracket</h2>
+
 
 <div id="bracket"></div>
 
 
+</section>
+
+
+
 <script src="teams.js"></script>
+
 <script src="script.js"></script>
+
 
 </body>
 </html>
