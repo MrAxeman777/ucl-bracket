@@ -1,6 +1,6 @@
 body{
 
-background:#041633;
+background:#061633;
 color:white;
 font-family:Arial;
 text-align:center;
@@ -10,38 +10,26 @@ text-align:center;
 
 h1{
 
-font-size:42px;
+font-size:40px;
 
 }
-
 
 
 #teams{
 
-width:500px;
+width:400px;
 margin:auto;
-display:flex;
-flex-direction:column;
-gap:8px;
 
 }
-
 
 
 .team{
 
-background:#102b55;
-padding:14px;
+background:#123265;
+padding:12px;
+margin:6px;
 border-radius:10px;
-cursor:grab;
-font-size:18px;
-
-}
-
-
-.team:hover{
-
-background:#1c4c91;
+cursor:pointer;
 
 }
 
@@ -50,12 +38,12 @@ background:#1c4c91;
 button{
 
 background:#ffd700;
-border:none;
-padding:14px 22px;
-margin:20px;
-border-radius:10px;
-font-size:18px;
+border:0;
+padding:12px 20px;
+margin:15px;
+border-radius:8px;
 cursor:pointer;
+font-size:16px;
 
 }
 
@@ -74,9 +62,9 @@ gap:15px;
 
 .match{
 
-background:#102b55;
+background:#123265;
 padding:20px;
-border-radius:15px;
+border-radius:12px;
 width:220px;
 
 }
@@ -85,29 +73,18 @@ width:220px;
 
 .match button{
 
-background:#1464d8;
+background:#1765db;
 color:white;
 width:180px;
-margin:5px;
-
-}
-
-
-.match button:hover{
-
-background:#ffd700;
-color:black;
 
 }
 
 
 
-.champion{
+.winner{
 
-background:#ffd700;
-color:black;
-padding:30px;
-border-radius:20px;
-margin:30px;
+background:#00aa55;
+padding:15px;
+border-radius:10px;
 
 }
