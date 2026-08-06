@@ -8,49 +8,29 @@
 
 </head>
 
-
 <body>
-
-<header>
 
 <h1>🏆 UEFA Champions League Predictor</h1>
 
-<p>
-Predict the new 36-team Champions League format
-</p>
-
-</header>
+<p>Predict the 2026/27 Champions League from League Phase → Final</p>
 
 
+<h2>League Phase (36 Teams)</h2>
 
-<section>
-
-<h2>League Phase Prediction</h2>
-
-<p>
-Drag teams into your predicted final table.
-</p>
+<p>Drag teams into your predicted finishing order.</p>
 
 
 <div id="teams"></div>
 
 
-<button onclick="createKnockout()">
+<button onclick="generateKnockout()">
 Generate Knockout Stage
 </button>
 
-
-<button onclick="reset()">
+<button onclick="resetAll()">
 Reset
 </button>
 
-
-</section>
-
-
-
-
-<section>
 
 <h2>Knockout Bracket</h2>
 
@@ -58,14 +38,9 @@ Reset
 <div id="bracket"></div>
 
 
-</section>
-
-
-
 <script src="teams.js"></script>
 
 <script src="script.js"></script>
-
 
 </body>
 </html>
